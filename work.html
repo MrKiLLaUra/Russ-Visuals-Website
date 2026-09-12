@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work — Rus Visuals</title>
+<meta name="description" content="Selected automotive photography work by Rus Visuals.">
+
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/gallery.css">
+</head>
+<body>
+
+<canvas id="grain"></canvas>
+<div class="cursor-dot" data-cursor-dot></div>
+<div class="cursor-ring" data-cursor-ring></div>
+
+<header class="site-header">
+  <a href="index.html" class="logo-mark">
+    <img src="assets/logo/logo.png" alt="RV" onerror="this.style.display='none'">
+    RUS VISUALS
+  </a>
+  <nav class="nav-links">
+    <a class="nav-link" href="work.html" aria-current="page">Work</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link" href="contact.html">Contact</a>
+  </nav>
+  <button class="nav-toggle" data-nav-toggle>Menu</button>
+</header>
+
+<!-- ============================= WORK ============================= -->
+<section id="work" class="work">
+  <div class="container">
+    <div class="work__head">
+      <h2 class="section-label" data-reveal>Selected&nbsp;Work</h2>
+      <p class="work__intro" data-reveal data-reveal-delay="1">
+        A collection of recent shoots — placeholder frames below, swap
+        in real work by replacing files in <code>/assets/images</code>.
+      </p>
+    </div>
+
+    <div class="gallery" data-gallery>
+      <figure class="gallery__item gallery__item--tall" data-gallery-item>
+        <img src="https://picsum.photos/id/1015/900/1200" alt="Placeholder work 1" loading="lazy">
+        <figcaption><span>01</span><span>Riverside — 2025</span></figcaption>
+      </figure>
+      <figure class="gallery__item" data-gallery-item>
+        <img src="https://picsum.photos/id/1025/900/700" alt="Placeholder work 2" loading="lazy">
+        <figcaption><span>02</span><span>Portraits — 2025</span></figcaption>
+      </figure>
+      <figure class="gallery__item gallery__item--wide" data-gallery-item>
+        <img src="https://picsum.photos/id/1035/1400/900" alt="Placeholder work 3" loading="lazy">
+        <figcaption><span>03</span><span>On Location — 2024</span></figcaption>
+      </figure>
+      <figure class="gallery__item" data-gallery-item>
+        <img src="https://picsum.photos/id/1041/900/1100" alt="Placeholder work 4" loading="lazy">
+        <figcaption><span>04</span><span>Studio — 2024</span></figcaption>
+      </figure>
+      <figure class="gallery__item gallery__item--tall" data-gallery-item>
+        <img src="https://picsum.photos/id/1043/900/1300" alt="Placeholder work 5" loading="lazy">
+        <figcaption><span>05</span><span>Details — 2024</span></figcaption>
+      </figure>
+      <figure class="gallery__item gallery__item--wide" data-gallery-item>
+        <img src="https://picsum.photos/id/1050/1400/850" alt="Placeholder work 6" loading="lazy">
+        <figcaption><span>06</span><span>Editorial — 2023</span></figcaption>
+      </figure>
+      <figure class="gallery__item" data-gallery-item>
+        <img src="https://picsum.photos/id/1059/900/900" alt="Placeholder work 7" loading="lazy">
+        <figcaption><span>07</span><span>Nightlife — 2023</span></figcaption>
+      </figure>
+      <figure class="gallery__item gallery__item--tall" data-gallery-item>
+        <img src="https://picsum.photos/id/1074/900/1250" alt="Placeholder work 8" loading="lazy">
+        <figcaption><span>08</span><span>Motion — 2023</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-marquee" aria-hidden="true">
+    <div class="footer-marquee__track" data-marquee>
+      <span>Rus Visuals&nbsp;—&nbsp;</span><span>Available for bookings&nbsp;—&nbsp;</span><span>Rus Visuals&nbsp;—&nbsp;</span><span>Available for bookings&nbsp;—&nbsp;</span>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© <span data-year></span> Rus Visuals</span>
+    <span>Back to top ↑</span>
+  </div>
+</footer>
+
+<!-- Lightbox root (populated by gallery.js) -->
+<div class="lightbox" data-lightbox hidden>
+  <button class="lightbox__close" data-lightbox-close aria-label="Close">Close ✕</button>
+  <img class="lightbox__img" data-lightbox-img src="" alt="">
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/gallery.js"></script>
+</body>
+</html>

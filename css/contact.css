@@ -1,0 +1,125 @@
+/* ==========================================================================
+   RUS VISUALS — Contact section + site footer
+   Big asymmetric closing CTA (title left/large, actions offset lower-right),
+   plus the footer marquee ticker and bottom bar. Tokens only — no
+   hardcoded colors/sizes so this matches the rest of the site.
+   ========================================================================== */
+
+.contact {
+  display: flex;
+  align-items: center;
+  min-height: 82vh;
+  padding: var(--space-6) 0;
+}
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--gutter);
+  row-gap: var(--space-5);
+  align-items: end;
+  width: 100%;
+}
+
+.contact__title {
+  grid-column: 1 / span 8;
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 9vw, var(--fs-hero));
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+}
+
+.contact__actions {
+  grid-column: 9 / span 4;
+  justify-self: end;
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-3);
+  text-align: right;
+  /* sits a little lower than the title's baseline — the offset half
+     of the asymmetric pairing */
+  margin-bottom: calc(-1 * var(--space-2));
+}
+
+/* -------------------------------------------------------------------- */
+/* Interactive link styling shared by the email + socials — an
+   underline that draws in on hover, monochrome only. */
+.contact__email,
+.contact__socials a {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.12em;
+  will-change: transform;
+}
+
+.contact__email::after,
+.contact__socials a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.contact__email:hover::after,
+.contact__socials a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.contact__email {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-lg);
+}
+
+.contact__socials {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* -------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .contact {
+    min-height: unset;
+  }
+
+  .contact__title {
+    grid-column: 1 / span 12;
+  }
+
+  .contact__actions {
+    grid-column: 1 / span 12;
+    justify-self: start;
+    align-items: flex-start;
+    text-align: left;
+    margin-bottom: 0;
+  }
+
+  .contact__socials {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact {
+    padding: var(--space-5) 0;
+  }
+
+  .contact__grid {
+    row-gap: var(--space-4);
+  }
+}

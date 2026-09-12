@@ -1,0 +1,286 @@
+/* ==========================================================================
+   RUS VISUALS — Selected Work (gallery section)
+   Owns: #work section chrome (.work, .work__head, .work__intro) since it's
+   the only stylesheet loaded for this section, the asymmetric masonry grid
+   (.gallery + item modifiers), and the lightbox overlay (.lightbox).
+   Strictly monochrome — only --ink / --paper (+ their rgba mixes) are used.
+   All timing comes from base.css motion tokens so this section animates in
+   step with the rest of the site.
+   ========================================================================== */
+
+/* ---------- section chrome ---------- */
+.work {
+  padding-block: var(--space-6) var(--space-5);
+}
+
+.work__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--line);
+}
+
+.work__intro {
+  max-width: 30ch;
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  color: var(--ink);
+  opacity: 0.72;
+  text-align: right;
+}
+
+.work__intro code {
+  font-family: var(--font-body);
+  font-style: italic;
+}
+
+@media (max-width: 720px) {
+  .work__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+  .work__intro {
+    max-width: none;
+    text-align: left;
+  }
+}
+
+/* ---------- asymmetric masonry grid ----------
+   Uniform column width, varying row-height only. This is the safe CSS Grid
+   masonry pattern: because every item is exactly 1 column wide, `dense`
+   auto-placement always finds a perfect fit in the shortest column — mixing
+   in wider column-spans (tried earlier) can leave un-fillable gaps when the
+   leftover space in a row doesn't exactly match the next item's span. */
+.gallery {
+  --gallery-unit: clamp(58px, 7.4vw, 108px);
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: var(--gallery-unit);
+  grid-auto-flow: row dense;
+  gap: clamp(0.6rem, 1.6vw, var(--space-2));
+}
+
+.gallery__item {
+  position: relative;
+  grid-column: span 1;
+  grid-row: span 5;
+  overflow: hidden;
+  background: var(--paper-dim);
+  perspective: 900px;
+  cursor: pointer;
+}
+
+.gallery__item:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.gallery__item--tall {
+  grid-row: span 8;
+}
+
+/* was a 2-column "wide" tile — now a short/landscape tile of the same
+   column width, so it still reads as a shorter, wider-feeling frame
+   without breaking the uniform-column masonry above */
+.gallery__item--wide {
+  grid-row: span 4;
+}
+
+.gallery__item img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.85) contrast(1.04);
+  transform: scale(var(--img-scale, 1)) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transform-origin: center;
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    filter var(--dur-med) var(--ease-out);
+  will-change: transform;
+}
+
+.gallery__item:hover img,
+.gallery__item:focus-within img {
+  --img-scale: 1.07;
+  filter: grayscale(0) contrast(1.02);
+}
+
+/* dark scrim, rises with the caption on hover */
+.gallery__item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10, 10, 10, 0.82) 0%, rgba(10, 10, 10, 0) 58%);
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-out);
+  pointer-events: none;
+}
+
+.gallery__item:hover::after,
+.gallery__item:focus-within::after {
+  opacity: 1;
+}
+
+.gallery__item figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-2);
+  color: var(--paper);
+  transform: translateY(100%);
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.gallery__item:hover figcaption,
+.gallery__item:focus-within figcaption {
+  transform: translateY(0);
+}
+
+.gallery__item figcaption span:first-child {
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out);
+}
+
+.gallery__item figcaption span:last-child {
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity var(--dur-med) var(--ease-out) 0.05s, transform var(--dur-med) var(--ease-out) 0.05s;
+}
+
+.gallery__item:hover figcaption span,
+.gallery__item:focus-within figcaption span {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* scroll-reveal fallback state, only applied by gallery.js when GSAP isn't
+   available — GSAP path animates via inline transforms instead */
+.gallery__item.js-reveal {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+}
+.gallery__item.js-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- tablet: two uniform columns, keep the height variation ---------- */
+@media (max-width: 900px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gallery__item--tall {
+    grid-row: span 7;
+  }
+}
+
+/* ---------- mobile: single column, normal aspect ratio throughout ---------- */
+@media (max-width: 640px) {
+  .gallery {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+  .gallery__item,
+  .gallery__item--tall,
+  .gallery__item--wide {
+    grid-column: span 1;
+    grid-row: auto;
+    aspect-ratio: 4 / 5;
+  }
+}
+
+/* respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .gallery__item img,
+  .gallery__item::after,
+  .gallery__item figcaption,
+  .gallery__item figcaption span,
+  .gallery__item.js-reveal {
+    transition: none !important;
+  }
+}
+
+/* ---------- lightbox ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 10, 10, 0.94);
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-in-out);
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox.is-open {
+  opacity: 1;
+}
+
+.lightbox__img {
+  max-width: 88vw;
+  max-height: 84vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transform: scale(0.94);
+  transition: transform var(--dur-med) var(--ease-out);
+  box-shadow: 0 40px 90px rgba(10, 10, 10, 0.55);
+}
+
+.lightbox.is-open .lightbox__img {
+  transform: scale(1);
+}
+
+.lightbox__close {
+  position: fixed;
+  top: var(--space-3);
+  right: var(--gutter);
+  background: none;
+  border: 1px solid var(--line-strong);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.6em 1.1em;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.lightbox__close:hover,
+.lightbox__close:focus-visible {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox,
+  .lightbox__img {
+    transition: none !important;
+  }
+}

@@ -1,0 +1,402 @@
+/* ==========================================================================
+   RUS VISUALS — Design tokens & base styles
+   Strictly monochrome (matches the RV logo). Every section file
+   (hero.css, gallery.css, about.css, contact.css) must use these
+   variables instead of hardcoding colors/sizes, so the whole site
+   stays visually consistent.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&display=swap');
+
+:root {
+  /* colors — monochrome only, no accent color */
+  --ink: #0a0a0a;
+  --paper: #f4f3ef;
+  --paper-dim: #e7e5df;
+  --line: rgba(10, 10, 10, 0.14);
+  --line-strong: rgba(10, 10, 10, 0.3);
+
+  /* type */
+  --font-display: 'Anton', 'Archivo Black', sans-serif;
+  --font-body: 'Space Grotesk', 'Inter', sans-serif;
+
+  /* fluid type scale */
+  --fs-hero: clamp(3.2rem, 11vw, 9.5rem);
+  --fs-xl: clamp(2rem, 5vw, 4rem);
+  --fs-lg: clamp(1.4rem, 2.4vw, 2rem);
+  --fs-md: 1.05rem;
+  --fs-sm: 0.85rem;
+  --fs-xs: 0.7rem;
+
+  /* spacing scale */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.75rem;
+  --space-4: 3rem;
+  --space-5: 5rem;
+  --space-6: 8rem;
+
+  /* layout */
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --max-width: 1600px;
+
+  /* motion — shared easing/duration so every section animates alike */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.25s;
+  --dur-med: 0.6s;
+  --dur-slow: 1.1s;
+
+  --cursor-size: 14px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  line-height: 1.5;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+@media (hover: none), (pointer: coarse) {
+  body { cursor: auto; }
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 0.5em;
+  height: 0.5em;
+  background: var(--ink);
+  border-radius: 50%;
+}
+
+.section-label {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  text-transform: uppercase;
+}
+
+/* generic scroll-reveal hook — main.js toggles .is-visible via IntersectionObserver */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+[data-reveal-delay="1"] { transition-delay: 0.08s; }
+[data-reveal-delay="2"] { transition-delay: 0.16s; }
+[data-reveal-delay="3"] { transition-delay: 0.24s; }
+[data-reveal-delay="4"] { transition-delay: 0.32s; }
+
+/* film-grain overlay canvas, animated in main.js */
+#grain {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 200;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+}
+
+/* custom cursor */
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 300;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+/* mix-blend-mode: difference against a light (paper) source color makes
+   the cursor render dark over light backgrounds and light over dark
+   ones (image, the black nav overlay, etc) — same trick the header
+   uses, so the cursor always stays visible instead of a fixed color. */
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--paper);
+  mix-blend-mode: difference;
+}
+.cursor-ring {
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  border: 1px solid var(--paper);
+  mix-blend-mode: difference;
+  transition: width var(--dur-fast) var(--ease-out), height var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+.cursor-ring.is-hover {
+  width: 56px;
+  height: 56px;
+  opacity: 0.6;
+}
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot, .cursor-ring { display: none; }
+}
+
+/* site nav */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-2) var(--gutter);
+  mix-blend-mode: difference;
+  color: var(--paper);
+}
+
+.logo-mark {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 0.02em;
+}
+
+.logo-mark img {
+  height: 34px;
+  width: auto;
+  filter: invert(1);
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--space-4);
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.nav-link {
+  position: relative;
+  padding-bottom: 2px;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.nav-link[aria-current="page"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+  opacity: 0.4;
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: inherit;
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+}
+
+@media (max-width: 720px) {
+  .nav-links {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: var(--space-3);
+    padding-inline: var(--gutter);
+    background: var(--ink);
+    color: var(--paper);
+    font-size: var(--fs-xl);
+    mix-blend-mode: normal;
+    /* closed state: clipped down to nothing at the corner the toggle
+       button sits in. js/main.js animates this circle open/closed and
+       fades the links in/out — kept in sync with the "100% 0%" origin
+       used there. visibility/pointer-events keep it non-interactive
+       and out of the tab order while closed. */
+    clip-path: circle(0px at 100% 0%);
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .nav-links.is-open {
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .nav-links .nav-link {
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-links {
+      clip-path: none !important;
+    }
+    .nav-links .nav-link {
+      opacity: 1;
+    }
+  }
+  .nav-toggle { display: block; }
+
+  /* while the full-screen menu is open, the header's difference-blend
+     trick (meant for the thin bar floating over varying imagery as you
+     scroll) would cancel out the overlay's own solid colors — logo and
+     toggle would render dark-on-dark against it — so drop the blend and
+     force light text just for that state. The rest of the time (menu
+     closed) the header keeps its normal adaptive difference-blend. */
+  .site-header:has(.nav-links.is-open) {
+    mix-blend-mode: normal;
+    color: var(--paper);
+  }
+
+  /* .nav-links is a DESCENDANT of .site-header, so its z-index only
+     competes with its siblings inside the header's own stacking context
+     (site-header's z-index:100 governs the header as a whole against the
+     rest of the page, not its children against each other) — without
+     this, the full-screen overlay's z-index:90 beats the logo/toggle's
+     default auto z-index and paints over them */
+  .logo-mark,
+  .nav-toggle {
+    position: relative;
+    z-index: 95;
+  }
+}
+
+footer.site-footer {
+  border-top: 1px solid var(--line);
+  padding: var(--space-5) 0 var(--space-3);
+}
+
+/* ==========================================================================
+   Footer marquee ticker + bottom bar — shared chrome, present on every
+   page, so these live here rather than in one page's own stylesheet.
+   ========================================================================== */
+.footer-marquee {
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  padding: var(--space-2) 0;
+}
+
+.footer-marquee__track {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.footer-marquee__track span {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: clamp(1.3rem, 3.4vw, 2.4rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  padding-right: 0.4em;
+}
+
+/* only used if GSAP failed to load and main.js falls back to CSS */
+.footer-marquee__track--css-fallback {
+  animation: footer-marquee-scroll 22s linear infinite;
+}
+
+@keyframes footer-marquee-scroll {
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-marquee__track--css-fallback {
+    animation-duration: 60s;
+  }
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-3);
+  font-size: var(--fs-sm);
+  opacity: 0.7;
+}
+
+.footer-bottom span:last-child {
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.footer-bottom span:last-child:hover {
+  opacity: 1;
+}
+
+@media (max-width: 480px) {
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
+  }
+}

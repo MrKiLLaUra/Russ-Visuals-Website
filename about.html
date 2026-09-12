@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Rus Visuals</title>
+<meta name="description" content="About Rus Visuals, an automotive photography practice.">
+
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/about.css">
+</head>
+<body>
+
+<canvas id="grain"></canvas>
+<div class="cursor-dot" data-cursor-dot></div>
+<div class="cursor-ring" data-cursor-ring></div>
+
+<header class="site-header">
+  <a href="index.html" class="logo-mark">
+    <img src="assets/logo/logo.png" alt="RV" onerror="this.style.display='none'">
+    RUS VISUALS
+  </a>
+  <nav class="nav-links">
+    <a class="nav-link" href="work.html">Work</a>
+    <a class="nav-link" href="about.html" aria-current="page">About</a>
+    <a class="nav-link" href="contact.html">Contact</a>
+  </nav>
+  <button class="nav-toggle" data-nav-toggle>Menu</button>
+</header>
+
+<!-- ============================= ABOUT ============================= -->
+<section id="about" class="about">
+  <div class="container about__grid">
+    <h2 class="section-label about__label" data-reveal>About</h2>
+
+    <div class="about__portrait" data-reveal data-reveal-delay="1">
+      <img src="https://picsum.photos/id/1005/700/900" alt="Portrait placeholder">
+    </div>
+
+    <div class="about__copy">
+      <p class="about__lead" data-reveal data-reveal-delay="1">
+        Your car deserves better photos. Rus Visuals is an automotive
+        photography practice built around light, texture and the
+        details that make a build worth showing off — placeholder bio
+        copy, replace with your real story.
+      </p>
+      <p data-reveal data-reveal-delay="2">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua —
+        swap this paragraph for a short background / approach / clients
+        blurb.
+      </p>
+
+      <ul class="about__facts" data-reveal data-reveal-delay="3">
+        <li><span>Est.</span><strong>2024</strong></li>
+        <li><span>Focus</span><strong>Cars · Meets · Editorial</strong></li>
+        <li><span>Based</span><strong>[City, Country]</strong></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-marquee" aria-hidden="true">
+    <div class="footer-marquee__track" data-marquee>
+      <span>Rus Visuals&nbsp;—&nbsp;</span><span>Available for bookings&nbsp;—&nbsp;</span><span>Rus Visuals&nbsp;—&nbsp;</span><span>Available for bookings&nbsp;—&nbsp;</span>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© <span data-year></span> Rus Visuals</span>
+    <span>Back to top ↑</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/about.js"></script>
+</body>
+</html>

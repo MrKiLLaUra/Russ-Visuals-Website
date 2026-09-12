@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rus Visuals — Automotive Photography</title>
+<meta name="description" content="Rus Visuals — automotive photography. Your car deserves better photos.">
+
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/hero.css">
+</head>
+<body>
+
+<canvas id="grain"></canvas>
+<div class="cursor-dot" data-cursor-dot></div>
+<div class="cursor-ring" data-cursor-ring></div>
+
+<header class="site-header">
+  <a href="index.html" class="logo-mark">
+    <img src="assets/logo/logo.png" alt="RV" onerror="this.style.display='none'">
+    RUS VISUALS
+  </a>
+  <nav class="nav-links">
+    <a class="nav-link" href="work.html">Work</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link" href="contact.html">Contact</a>
+  </nav>
+  <button class="nav-toggle" data-nav-toggle>Menu</button>
+</header>
+
+<!-- ============================= HERO ============================= -->
+<section id="hero" class="hero">
+  <div class="container hero__grid">
+    <h1 class="hero__title" data-split-lines>
+      <span>Rus</span>
+      <span>Visuals</span>
+    </h1>
+    <div class="hero__meta">
+      <p class="eyebrow" data-reveal>Automotive Photography</p>
+      <p class="hero__location" data-reveal data-reveal-delay="1">&ldquo;Your car deserves better photos.&rdquo;</p>
+    </div>
+  </div>
+  <div class="hero__scroll-cue" data-reveal data-reveal-delay="2">
+    <span>Scroll</span>
+    <span class="hero__scroll-line"></span>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-marquee" aria-hidden="true">
+    <div class="footer-marquee__track" data-marquee>
+      <span>Rus Visuals&nbsp;—&nbsp;</span><span>Available for bookings&nbsp;—&nbsp;</span><span>Rus Visuals&nbsp;—&nbsp;</span><span>Available for bookings&nbsp;—&nbsp;</span>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© <span data-year></span> Rus Visuals</span>
+    <span>Back to top ↑</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/hero.js"></script>
+</body>
+</html>

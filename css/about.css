@@ -1,0 +1,179 @@
+/* ==========================================================================
+   RUS VISUALS — About section
+   Asymmetric editorial layout: a vertical "running head" label pinned to
+   the left edge, a large offset portrait, and a copy column that lands
+   lower + to the right rather than sitting in a centered two-up split.
+   Uses tokens from base.css only — no hardcoded colors/sizes.
+   ========================================================================== */
+
+.about {
+  padding: var(--space-6) 0;
+  overflow: hidden; /* keep the parallaxed portrait image clipped to its box */
+}
+
+.about__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: var(--gutter);
+  row-gap: var(--space-4);
+  align-items: start;
+}
+
+/* -------------------------------------------------------------------- */
+/* Label — a running head pinned to the far left, rotated on wide
+   screens so it reads like a magazine section marker rather than a
+   centered heading. Only positioning/orientation is set here — the
+   type styling itself (font/size/uppercase) stays in .section-label. */
+.about__label {
+  grid-column: 1 / span 12;
+  grid-row: 1;
+  margin-bottom: var(--space-1);
+}
+
+/* -------------------------------------------------------------------- */
+.about__portrait {
+  position: relative;
+  grid-column: 1 / span 7;
+  grid-row: 2;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--paper-dim);
+  border: 1px solid var(--line);
+}
+
+.about__portrait img {
+  position: absolute;
+  left: 0;
+  top: -15%;
+  width: 100%;
+  height: 130%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+/* -------------------------------------------------------------------- */
+.about__copy {
+  grid-column: 8 / span 5;
+  grid-row: 2;
+  /* land lower than the portrait's top edge for the asymmetric offset */
+  margin-top: var(--space-5);
+}
+
+.about__lead {
+  font-size: var(--fs-lg);
+  font-weight: 500;
+  line-height: 1.35;
+  max-width: 32ch;
+}
+
+.about__copy > p:not(.about__lead) {
+  margin-top: var(--space-3);
+  max-width: 38ch;
+  font-size: var(--fs-md);
+  line-height: 1.6;
+  opacity: 0.75;
+}
+
+.about__facts {
+  list-style: none;
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.about__facts li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.about__facts li span {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.55;
+  white-space: nowrap;
+}
+
+.about__facts li strong {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-sm);
+  text-align: right;
+}
+
+/* -------------------------------------------------------------------- */
+/* Wide desktop: turn the label into a vertical running head that
+   tracks the full height of the grid, reinforcing the asymmetry. */
+@media (min-width: 1080px) {
+  .about__grid {
+    grid-template-rows: repeat(2, auto);
+  }
+
+  .about__label {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 2;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    justify-self: start;
+    align-self: start;
+    margin-bottom: 0;
+  }
+
+  .about__portrait {
+    grid-column: 2 / span 6;
+    grid-row: 1 / span 2;
+  }
+
+  .about__copy {
+    grid-column: 8 / span 5;
+    grid-row: 1 / span 2;
+    align-self: center;
+    margin-top: var(--space-6);
+  }
+}
+
+/* -------------------------------------------------------------------- */
+/* Tablet: keep the offset copy column but drop the vertical label. */
+@media (max-width: 1079px) and (min-width: 641px) {
+  .about__portrait {
+    grid-column: 1 / span 7;
+  }
+
+  .about__copy {
+    grid-column: 8 / span 5;
+    margin-top: var(--space-4);
+  }
+}
+
+/* -------------------------------------------------------------------- */
+/* Mobile: simple stack, no overlap, portrait first then copy. */
+@media (max-width: 640px) {
+  .about {
+    padding: var(--space-5) 0;
+  }
+
+  .about__grid {
+    display: block;
+  }
+
+  .about__label {
+    margin-bottom: var(--space-3);
+  }
+
+  .about__portrait {
+    aspect-ratio: 3 / 4;
+  }
+
+  .about__copy {
+    margin-top: var(--space-4);
+  }
+
+  .about__lead,
+  .about__copy > p:not(.about__lead) {
+    max-width: none;
+  }
+}

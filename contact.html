@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Rus Visuals</title>
+<meta name="description" content="Get in touch with Rus Visuals for automotive photography bookings.">
+
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/contact.css">
+</head>
+<body>
+
+<canvas id="grain"></canvas>
+<div class="cursor-dot" data-cursor-dot></div>
+<div class="cursor-ring" data-cursor-ring></div>
+
+<header class="site-header">
+  <a href="index.html" class="logo-mark">
+    <img src="assets/logo/logo.png" alt="RV" onerror="this.style.display='none'">
+    RUS VISUALS
+  </a>
+  <nav class="nav-links">
+    <a class="nav-link" href="work.html">Work</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link" href="contact.html" aria-current="page">Contact</a>
+  </nav>
+  <button class="nav-toggle" data-nav-toggle>Menu</button>
+</header>
+
+<!-- ============================= CONTACT ============================= -->
+<section id="contact" class="contact">
+  <div class="container contact__grid">
+    <h2 class="contact__title" data-reveal>
+      Let's make<br>something.
+    </h2>
+    <div class="contact__actions" data-reveal data-reveal-delay="1">
+      <a class="contact__email" href="mailto:hello@rusvisuals.com" data-magnetic>
+        hello@rusvisuals.com
+      </a>
+      <div class="contact__socials">
+        <a href="#" data-magnetic>Instagram</a>
+        <a href="#" data-magnetic>Behance</a>
+        <a href="#" data-magnetic>Twitter&nbsp;/&nbsp;X</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-marquee" aria-hidden="true">
+    <div class="footer-marquee__track" data-marquee>
+      <span>Rus Visuals&nbsp;—&nbsp;</span><span>Available for bookings&nbsp;—&nbsp;</span><span>Rus Visuals&nbsp;—&nbsp;</span><span>Available for bookings&nbsp;—&nbsp;</span>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© <span data-year></span> Rus Visuals</span>
+    <span>Back to top ↑</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/contact.js"></script>
+</body>
+</html>
