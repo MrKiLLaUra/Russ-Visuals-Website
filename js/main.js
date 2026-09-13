@@ -1,15 +1,17 @@
 /* ==========================================================================
-   RUS VISUALS — shared core
-   Cursor follower, film grain, generic scroll-reveal, nav toggle, footer
-   year, GSAP/ScrollTrigger registration. Section-specific files (hero.js,
-   gallery.js, about.js, contact.js) rely on GSAP + ScrollTrigger already
-   being registered by the time they run — load order in index.html matters.
+   RUSSS VISUALS — shared core
+   Generic scroll-reveal, nav toggle, footer year, magnetic hover,
+   GSAP/ScrollTrigger registration. Section-specific files
+   (hero.js, gallery.js, about.js) rely on GSAP + ScrollTrigger already
+   being registered by the time they run — load order in each page matters.
    ========================================================================== */
 
 (function () {
   if (window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
   }
+
+  const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
   /* ---------- footer year ---------- */
   document.querySelectorAll('[data-year]').forEach((el) => {
@@ -111,80 +113,6 @@
     revealEls.forEach((el) => el.classList.add('is-visible'));
   }
 
-  /* ---------- custom cursor ---------- */
-  const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
-  const dot = document.querySelector('[data-cursor-dot]');
-  const ring = document.querySelector('[data-cursor-ring]');
-
-  if (!isTouch && dot && ring) {
-    const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    const ringPos = { x: pos.x, y: pos.y };
-
-    window.addEventListener('mousemove', (e) => {
-      pos.x = e.clientX;
-      pos.y = e.clientY;
-      dot.style.transform = `translate(${pos.x}px, ${pos.y}px) translate(-50%, -50%)`;
-    });
-
-    function tickRing() {
-      ringPos.x += (pos.x - ringPos.x) * 0.18;
-      ringPos.y += (pos.y - ringPos.y) * 0.18;
-      ring.style.transform = `translate(${ringPos.x}px, ${ringPos.y}px) translate(-50%, -50%)`;
-      requestAnimationFrame(tickRing);
-    }
-    requestAnimationFrame(tickRing);
-
-    const hoverables = 'a, button, [data-magnetic], [data-gallery-item]';
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.closest(hoverables)) ring.classList.add('is-hover');
-    });
-    document.addEventListener('mouseout', (e) => {
-      if (e.target.closest(hoverables)) ring.classList.remove('is-hover');
-    });
-  }
-
-  /* ---------- animated film grain ---------- */
-  const canvas = document.getElementById('grain');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let w, h;
-    const scale = 0.5; // render grain at half-res, upscaled, for perf
-
-    function resize() {
-      w = canvas.width = Math.floor(window.innerWidth * scale);
-      h = canvas.height = Math.floor(window.innerHeight * scale);
-      canvas.style.width = '100vw';
-      canvas.style.height = '100vh';
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    const imageData = () => ctx.createImageData(w, h);
-
-    function drawGrain() {
-      const id = imageData();
-      const buffer = id.data;
-      for (let i = 0; i < buffer.length; i += 4) {
-        const shade = Math.random() * 255;
-        buffer[i] = shade;
-        buffer[i + 1] = shade;
-        buffer[i + 2] = shade;
-        buffer[i + 3] = 255;
-      }
-      ctx.putImageData(id, 0, 0);
-    }
-
-    let last = 0;
-    function loop(t) {
-      if (t - last > 60) {
-        drawGrain();
-        last = t;
-      }
-      requestAnimationFrame(loop);
-    }
-    requestAnimationFrame(loop);
-  }
-
   /* ---------- back to top ---------- */
   document.querySelectorAll('.footer-bottom span').forEach((span) => {
     if (span.textContent.includes('Back to top')) {
@@ -193,17 +121,93 @@
     }
   });
 
-  /* ---------- footer infinite marquee ----------
-     lives here (not a page-specific script) since the footer is shared
-     chrome present on every page. Track's content is already duplicated
-     2x in the HTML, so translating -50% loops seamlessly. */
-  const marqueeTrack = document.querySelector('[data-marquee]');
+  /* ---------- magnetic hover ----------
+     Nudges any [data-magnetic] element toward the cursor on mousemove,
+     easing back to rest on mouseleave. Lives here (not a page-specific
+     script) since it's now used on more than just the Contact page
+     (e.g. the Home hero CTA). */
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const magnets = document.querySelectorAll('[data-magnetic]');
+
+  if (magnets.length && !isTouch && !prefersReducedMotion) {
+    const STRENGTH = 16; // max px pull
+
+    magnets.forEach((el) => {
+      function handleMove(e) {
+        const rect = el.getBoundingClientRect();
+        const relX = e.clientX - (rect.left + rect.width / 2);
+        const relY = e.clientY - (rect.top + rect.height / 2);
+        const x = (relX / (rect.width / 2)) * STRENGTH;
+        const y = (relY / (rect.height / 2)) * STRENGTH;
+
+        if (window.gsap) {
+          gsap.to(el, { x, y, duration: 0.4, ease: 'power3.out', overwrite: true });
+        } else {
+          el.style.transition = `transform ${getComputedStyle(document.documentElement).getPropertyValue('--dur-fast') || '.25s'} ease-out`;
+          el.style.transform = `translate(${x}px, ${y}px)`;
+        }
+      }
+
+      function handleLeave() {
+        if (window.gsap) {
+          gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)', overwrite: true });
+        } else {
+          el.style.transition = 'transform .5s cubic-bezier(0.16, 1, 0.3, 1)';
+          el.style.transform = 'translate(0, 0)';
+        }
+      }
+
+      el.addEventListener('mousemove', handleMove);
+      el.addEventListener('mouseleave', handleLeave);
+    });
+  }
+
+  /* ---------- footer infinite marquee ----------
+     Lives here (not a page-specific script) since the footer is shared
+     chrome present on every page. The HTML only contains ONE copy of
+     the phrase (.footer-marquee__set) — here we clone it into two
+     identical halves, each wide enough on its own to fully cover the
+     visible strip, then translate the track by exactly one half
+     (xPercent:-50). Because both halves are identical and neither is
+     narrower than the viewport, the loop point is invisible — a fixed
+     "2 copies" in the HTML could leave a visible blank gap on wide
+     screens instead of connecting seamlessly.
+
+     Measuring text width has to wait for the Anton web font to finish
+     loading — measuring against the fallback font first (whatever the
+     browser paints before the @import'd font arrives) undercounts how
+     many copies are needed once Anton swaps in and the text gets
+     wider, which is exactly the kind of thing that reintroduces a gap
+     at the loop point. */
+  const marqueeTrack = document.querySelector('[data-marquee]');
   if (marqueeTrack && !prefersReducedMotion) {
-    if (window.gsap) {
-      gsap.to(marqueeTrack, { xPercent: -50, duration: 24, repeat: -1, ease: 'none' });
+    const originalSetHTML = (marqueeTrack.querySelector('.footer-marquee__set') || {}).outerHTML;
+
+    const buildMarquee = () => {
+      let copiesPerHalf = 1;
+      if (originalSetHTML) {
+        marqueeTrack.innerHTML = originalSetHTML;
+        const originalSet = marqueeTrack.querySelector('.footer-marquee__set');
+        const container = marqueeTrack.parentElement;
+        const containerWidth = (container && container.getBoundingClientRect().width) || window.innerWidth;
+        const setWidth = originalSet.getBoundingClientRect().width || 1;
+        copiesPerHalf = Math.max(1, Math.ceil(containerWidth / setWidth));
+        marqueeTrack.innerHTML = originalSetHTML.repeat(copiesPerHalf * 2);
+      }
+
+      if (window.gsap) {
+        gsap.killTweensOf(marqueeTrack);
+        gsap.set(marqueeTrack, { xPercent: 0 });
+        gsap.to(marqueeTrack, { xPercent: -50, duration: copiesPerHalf * 24, repeat: -1, ease: 'none' });
+      } else {
+        marqueeTrack.classList.add('footer-marquee__track--css-fallback');
+      }
+    };
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(buildMarquee);
     } else {
-      marqueeTrack.classList.add('footer-marquee__track--css-fallback');
+      buildMarquee();
     }
   }
 })();

@@ -1,0 +1,233 @@
+/* ==========================================================================
+   RUSSS VISUALS — Services & Pricing page
+   Two pricing cards, monochrome only — the "highlight" card uses an
+   inverted (ink background) treatment for contrast instead of an
+   accent color, keeping the single-color brand rule intact.
+   ========================================================================== */
+
+.services {
+  padding: var(--space-6) 0 var(--space-6);
+}
+
+.services__head {
+  max-width: 46ch;
+  margin-bottom: var(--space-5);
+}
+
+.services__intro {
+  margin-top: var(--space-2);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  opacity: 0.72;
+}
+
+.pricing {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gutter);
+}
+
+.pricing__card {
+  border: 1px solid var(--line-strong);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+}
+
+.pricing__card--highlight {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+  /* asymmetric touch: nudge the highlighted card up slightly */
+  transform: translateY(calc(-1 * var(--space-2)));
+}
+
+.pricing__tier {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  text-transform: uppercase;
+}
+
+.pricing__rate {
+  margin-top: var(--space-1);
+  font-size: var(--fs-md);
+  opacity: 0.7;
+}
+
+.pricing__rate span {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  opacity: 1;
+}
+
+.pricing__desc {
+  margin-top: var(--space-3);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  opacity: 0.8;
+  max-width: 32ch;
+}
+
+.pricing__includes {
+  list-style: none;
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid currentColor;
+  border-top-color: var(--line);
+  flex-grow: 1;
+}
+
+.pricing__card--highlight .pricing__includes {
+  border-top-color: rgba(244, 243, 239, 0.25);
+}
+
+.pricing__includes li {
+  padding: 0.4em 0;
+  font-size: var(--fs-sm);
+}
+
+.pricing__includes li::before {
+  content: '— ';
+  opacity: 0.5;
+}
+
+.pricing__cta {
+  position: relative;
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: var(--space-4);
+  padding-bottom: 0.15em;
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  text-transform: uppercase;
+}
+
+.pricing__cta::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.pricing__cta:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.services__note {
+  margin-top: var(--space-5);
+  font-size: var(--fs-sm);
+  opacity: 0.6;
+}
+
+@media (max-width: 720px) {
+  .pricing {
+    grid-template-columns: 1fr;
+  }
+  .pricing__card--highlight {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   FAQ accordion — pure CSS, no JS. Each <details> is a 2-row grid
+   (summary / answer) and the answer row animates 0fr → 1fr on [open],
+   which lets `overflow:hidden` clip it smoothly without measuring
+   heights in JS.
+   ========================================================================== */
+.faq {
+  padding: var(--space-5) 0 var(--space-6);
+  border-top: 1px solid var(--line);
+}
+
+.faq .section-label {
+  margin-bottom: var(--space-3);
+}
+
+.faq__list {
+  max-width: 760px;
+}
+
+.faq__item {
+  display: grid;
+  grid-template-rows: auto 0fr;
+  transition: grid-template-rows var(--dur-med) var(--ease-out);
+  border-bottom: 1px solid var(--line);
+}
+
+.faq__item[open] {
+  grid-template-rows: auto 1fr;
+}
+
+.faq__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-md);
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq__q::-webkit-details-marker {
+  display: none;
+}
+
+.faq__icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+.faq__icon::before,
+.faq__icon::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  background: var(--ink);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.faq__icon::before {
+  width: 100%;
+  height: 1.5px;
+}
+
+.faq__icon::after {
+  width: 1.5px;
+  height: 100%;
+}
+
+.faq__item[open] .faq__icon::after {
+  transform: rotate(90deg);
+  opacity: 0;
+}
+
+.faq__a {
+  overflow: hidden;
+}
+
+.faq__a p {
+  padding-bottom: var(--space-3);
+  max-width: 60ch;
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  opacity: 0.75;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq__item {
+    transition: none;
+  }
+}

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   RUS VISUALS — Design tokens & base styles
+   RUSSS VISUALS — Design tokens & base styles
    Strictly monochrome (matches the RV logo). Every section file
    (hero.css, gallery.css, about.css, contact.css) must use these
    variables instead of hardcoding colors/sizes, so the whole site
@@ -46,8 +46,6 @@
   --dur-fast: 0.25s;
   --dur-med: 0.6s;
   --dur-slow: 1.1s;
-
-  --cursor-size: 14px;
 }
 
 * {
@@ -68,11 +66,6 @@ body {
   font-weight: 700;
   line-height: 1.5;
   overflow-x: hidden;
-  cursor: none;
-}
-
-@media (hover: none), (pointer: coarse) {
-  body { cursor: auto; }
 }
 
 img {
@@ -139,56 +132,6 @@ h1, h2, h3 {
 [data-reveal-delay="3"] { transition-delay: 0.24s; }
 [data-reveal-delay="4"] { transition-delay: 0.32s; }
 
-/* film-grain overlay canvas, animated in main.js */
-#grain {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 200;
-  opacity: 0.05;
-  mix-blend-mode: multiply;
-}
-
-/* custom cursor */
-.cursor-dot,
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  border-radius: 50%;
-  z-index: 300;
-  transform: translate(-50%, -50%);
-  will-change: transform;
-}
-/* mix-blend-mode: difference against a light (paper) source color makes
-   the cursor render dark over light backgrounds and light over dark
-   ones (image, the black nav overlay, etc) — same trick the header
-   uses, so the cursor always stays visible instead of a fixed color. */
-.cursor-dot {
-  width: 6px;
-  height: 6px;
-  background: var(--paper);
-  mix-blend-mode: difference;
-}
-.cursor-ring {
-  width: var(--cursor-size);
-  height: var(--cursor-size);
-  border: 1px solid var(--paper);
-  mix-blend-mode: difference;
-  transition: width var(--dur-fast) var(--ease-out), height var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
-}
-.cursor-ring.is-hover {
-  width: 56px;
-  height: 56px;
-  opacity: 0.6;
-}
-@media (hover: none), (pointer: coarse) {
-  .cursor-dot, .cursor-ring { display: none; }
-}
-
 /* site nav */
 .site-header {
   position: fixed;
@@ -200,8 +143,9 @@ h1, h2, h3 {
   align-items: center;
   justify-content: space-between;
   padding: var(--space-2) var(--gutter);
-  mix-blend-mode: difference;
-  color: var(--paper);
+  background: var(--paper);
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
 }
 
 .logo-mark {
@@ -214,9 +158,8 @@ h1, h2, h3 {
 }
 
 .logo-mark img {
-  height: 34px;
+  height: 56px;
   width: auto;
-  filter: invert(1);
 }
 
 .nav-links {
@@ -306,15 +249,17 @@ h1, h2, h3 {
   }
   .nav-toggle { display: block; }
 
-  /* while the full-screen menu is open, the header's difference-blend
-     trick (meant for the thin bar floating over varying imagery as you
-     scroll) would cancel out the overlay's own solid colors — logo and
-     toggle would render dark-on-dark against it — so drop the blend and
-     force light text just for that state. The rest of the time (menu
-     closed) the header keeps its normal adaptive difference-blend. */
+  /* the header is a solid bar matching the page background by default
+     (ink text/logo); once the full-screen black menu opens behind it,
+     the logo/toggle (kept on top via z-index below) need to flip to
+     light so they stay legible against that dark overlay instead of
+     against the header's own light background. */
   .site-header:has(.nav-links.is-open) {
-    mix-blend-mode: normal;
     color: var(--paper);
+  }
+
+  .site-header:has(.nav-links.is-open) .logo-mark img {
+    filter: invert(1);
   }
 
   /* .nav-links is a DESCENDANT of .site-header, so its z-index only
@@ -336,6 +281,137 @@ footer.site-footer {
 }
 
 /* ==========================================================================
+   Closing CTA strip — shared chrome used near the bottom of every page
+   except Contact itself (which already is the CTA). Inverted (ink bg)
+   to give each page a strong closing beat, echoing the pricing page's
+   highlighted card rather than introducing a new color.
+   ========================================================================== */
+.cta-strip {
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--space-6) 0;
+  text-align: center;
+}
+
+.cta-strip__text {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, var(--fs-xl));
+  text-transform: uppercase;
+  line-height: 1.1;
+  max-width: 22ch;
+  margin-inline: auto;
+}
+
+.cta-strip__link {
+  position: relative;
+  display: inline-block;
+  margin-top: var(--space-3);
+  padding-bottom: 0.15em;
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  text-transform: uppercase;
+}
+
+.cta-strip__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.cta-strip__link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ==========================================================================
+   "Recent Work" teaser strip — shared chrome, used on Home and About to
+   preview the Work gallery without duplicating the full masonry grid.
+   ========================================================================== */
+.work-teaser {
+  padding: var(--space-6) 0 var(--space-5);
+  border-top: 1px solid var(--line);
+}
+
+.work-teaser__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.work-teaser__link {
+  position: relative;
+  padding-bottom: 0.15em;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.work-teaser__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.work-teaser__link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.work-teaser__row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gutter);
+}
+
+.work-teaser__row figure {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--paper-dim);
+}
+
+.work-teaser__row img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.85);
+  transition: filter var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out);
+}
+
+.work-teaser__row figure:hover img {
+  filter: grayscale(0);
+  transform: scale(1.04);
+}
+
+@media (max-width: 720px) {
+  .work-teaser__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+  .work-teaser__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
    Footer marquee ticker + bottom bar — shared chrome, present on every
    page, so these live here rather than in one page's own stylesheet.
    ========================================================================== */
@@ -350,6 +426,16 @@ footer.site-footer {
   width: max-content;
   white-space: nowrap;
   will-change: transform;
+}
+
+/* main.js clones this element enough times (twice over, as two
+   identical halves) to guarantee the track always fully tiles the
+   visible width before animating — with a fixed number of copies
+   baked into the HTML, a wide-enough viewport could see a blank gap
+   at the loop point instead of a seamless connect. */
+.footer-marquee__set {
+  display: flex;
+  flex-shrink: 0;
 }
 
 .footer-marquee__track span {
@@ -391,6 +477,16 @@ footer.site-footer {
 
 .footer-bottom span:last-child:hover {
   opacity: 1;
+}
+
+.footer-bottom a {
+  text-decoration: none;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.footer-bottom a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 @media (max-width: 480px) {

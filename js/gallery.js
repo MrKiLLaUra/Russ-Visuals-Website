@@ -1,5 +1,5 @@
 /* ==========================================================================
-   RUS VISUALS — gallery section
+   RUSSS VISUALS — gallery section
    Scroll-in stagger for the .gallery__item figures, a subtle mouse-tilt
    micro-interaction on each frame, and the click-to-open lightbox.
    Runs after main.js (GSAP/ScrollTrigger already registered there, if
@@ -52,6 +52,37 @@
     );
     items.forEach((item) => io.observe(item));
   }
+
+  /* ---------------------------------------------------------------------
+     Photo / Video filter tabs
+     Shows/hides items by their data-category; when a category has no
+     matching items (Video, until real clips are added) shows the
+     work__empty message instead of a blank grid.
+     --------------------------------------------------------------------- */
+  const tabs = document.querySelectorAll('[data-filter]');
+  const emptyMsg = document.querySelector('[data-work-empty]');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const filter = tab.dataset.filter;
+      if (tab.classList.contains('is-active')) return;
+
+      tabs.forEach((t) => {
+        t.classList.toggle('is-active', t === tab);
+        t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
+      });
+
+      let visibleCount = 0;
+      items.forEach((item) => {
+        const matches = item.dataset.category === filter;
+        item.hidden = !matches;
+        if (matches) visibleCount += 1;
+      });
+
+      if (emptyMsg) emptyMsg.hidden = visibleCount > 0;
+      gallery.hidden = visibleCount === 0;
+    });
+  });
 
   /* ---------------------------------------------------------------------
      2. Subtle mouse-position tilt on each frame

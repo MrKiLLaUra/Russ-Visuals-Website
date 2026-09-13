@@ -3,25 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Work — Rus Visuals</title>
-<meta name="description" content="Selected automotive photography work by Rus Visuals.">
+<title>Work — Russs Visuals</title>
+<meta name="description" content="Selected automotive photography work by Russs Visuals.">
 
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/gallery.css">
 </head>
 <body>
 
-<canvas id="grain"></canvas>
-<div class="cursor-dot" data-cursor-dot></div>
-<div class="cursor-ring" data-cursor-ring></div>
 
 <header class="site-header">
   <a href="index.html" class="logo-mark">
-    <img src="assets/logo/logo.png" alt="RV" onerror="this.style.display='none'">
-    RUS VISUALS
+    <img src="assets/logo/logo.png" alt="Russs Visuals" onerror="this.style.display='none'">
   </a>
   <nav class="nav-links">
     <a class="nav-link" href="work.html" aria-current="page">Work</a>
+    <a class="nav-link" href="services.html">Services</a>
     <a class="nav-link" href="about.html">About</a>
     <a class="nav-link" href="contact.html">Contact</a>
   </nav>
@@ -39,51 +36,87 @@
       </p>
     </div>
 
+    <div class="work__tabs" data-reveal data-reveal-delay="1" role="tablist">
+      <button class="work__tab is-active" data-filter="photo" role="tab" aria-selected="true">Photo</button>
+      <button class="work__tab" data-filter="video" role="tab" aria-selected="false">Video</button>
+    </div>
+
     <div class="gallery" data-gallery>
-      <figure class="gallery__item gallery__item--tall" data-gallery-item>
+      <figure class="gallery__item gallery__item--tall" data-gallery-item data-category="photo">
         <img src="https://picsum.photos/id/1015/900/1200" alt="Placeholder work 1" loading="lazy">
         <figcaption><span>01</span><span>Riverside — 2025</span></figcaption>
       </figure>
-      <figure class="gallery__item" data-gallery-item>
+      <figure class="gallery__item" data-gallery-item data-category="photo">
         <img src="https://picsum.photos/id/1025/900/700" alt="Placeholder work 2" loading="lazy">
         <figcaption><span>02</span><span>Portraits — 2025</span></figcaption>
       </figure>
-      <figure class="gallery__item gallery__item--wide" data-gallery-item>
+      <figure class="gallery__item gallery__item--wide" data-gallery-item data-category="photo">
         <img src="https://picsum.photos/id/1035/1400/900" alt="Placeholder work 3" loading="lazy">
         <figcaption><span>03</span><span>On Location — 2024</span></figcaption>
       </figure>
-      <figure class="gallery__item" data-gallery-item>
+      <figure class="gallery__item" data-gallery-item data-category="photo">
         <img src="https://picsum.photos/id/1041/900/1100" alt="Placeholder work 4" loading="lazy">
         <figcaption><span>04</span><span>Studio — 2024</span></figcaption>
       </figure>
-      <figure class="gallery__item gallery__item--tall" data-gallery-item>
+      <figure class="gallery__item gallery__item--tall" data-gallery-item data-category="photo">
         <img src="https://picsum.photos/id/1043/900/1300" alt="Placeholder work 5" loading="lazy">
         <figcaption><span>05</span><span>Details — 2024</span></figcaption>
       </figure>
-      <figure class="gallery__item gallery__item--wide" data-gallery-item>
+      <figure class="gallery__item gallery__item--wide" data-gallery-item data-category="photo">
         <img src="https://picsum.photos/id/1050/1400/850" alt="Placeholder work 6" loading="lazy">
         <figcaption><span>06</span><span>Editorial — 2023</span></figcaption>
       </figure>
-      <figure class="gallery__item" data-gallery-item>
+      <figure class="gallery__item" data-gallery-item data-category="photo">
         <img src="https://picsum.photos/id/1059/900/900" alt="Placeholder work 7" loading="lazy">
         <figcaption><span>07</span><span>Nightlife — 2023</span></figcaption>
       </figure>
-      <figure class="gallery__item gallery__item--tall" data-gallery-item>
+      <figure class="gallery__item gallery__item--tall" data-gallery-item data-category="photo">
         <img src="https://picsum.photos/id/1074/900/1250" alt="Placeholder work 8" loading="lazy">
         <figcaption><span>08</span><span>Motion — 2023</span></figcaption>
       </figure>
     </div>
+
+    <p class="work__empty" data-work-empty hidden>Video reel coming soon — check back shortly, or follow along on Instagram.</p>
+  </div>
+</section>
+
+<!-- ============================= BRANDS ============================= -->
+<section class="brands">
+  <div class="container">
+    <h2 class="section-label" data-reveal>Brands&nbsp;I've&nbsp;Shot</h2>
+    <ul class="brands__list" data-reveal data-reveal-delay="1">
+      <li>Alfa&nbsp;Romeo</li>
+      <li>Audi</li>
+      <li>BMW</li>
+      <li>Hyundai</li>
+      <li>Kia</li>
+      <li>Mazda</li>
+      <li>Mercedes-Benz</li>
+      <li>Nissan</li>
+      <li>Porsche</li>
+      <li>Range&nbsp;Rover</li>
+      <li>Toyota</li>
+      <li>Volkswagen</li>
+    </ul>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div class="container">
+    <h2 class="cta-strip__text" data-reveal>Ready to make your car look this good?</h2>
+    <a class="cta-strip__link" href="contact.html" data-magnetic data-reveal data-reveal-delay="1">Book a shoot →</a>
   </div>
 </section>
 
 <footer class="site-footer">
   <div class="footer-marquee" aria-hidden="true">
     <div class="footer-marquee__track" data-marquee>
-      <span>Rus Visuals&nbsp;—&nbsp;</span><span>Available for bookings&nbsp;—&nbsp;</span><span>Rus Visuals&nbsp;—&nbsp;</span><span>Available for bookings&nbsp;—&nbsp;</span>
+      <span class="footer-marquee__set"><span>Russs Visuals&nbsp;—&nbsp;</span><span>Available for bookings&nbsp;—&nbsp;</span></span>
     </div>
   </div>
   <div class="container footer-bottom">
-    <span>© <span data-year></span> Rus Visuals</span>
+    <span>© <span data-year></span> Russs Visuals</span>
+    <span>Built by <a href="https://limen-studios.com" target="_blank" rel="noopener">Limen Studios</a></span>
     <span>Back to top ↑</span>
   </div>
 </footer>
