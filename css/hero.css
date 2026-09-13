@@ -1,6 +1,6 @@
 /* ==========================================================================
-   RUS VISUALS — Hero section
-   A big, off-kilter wordmark rather than a centered banner: "Rus" sits
+   RUSSS VISUALS — Hero section
+   A big, off-kilter wordmark rather than a centered banner: "Russs" sits
    large top-left, "Visuals" lands smaller, lower and to the right,
    overlapping its tail — a hand-tagged signature rather than a boxed
    headline. Meta text counter-weights it on the opposite (right) edge.
@@ -137,6 +137,35 @@
   opacity: 0.65;
 }
 
+.hero__cta {
+  position: relative;
+  display: inline-block;
+  margin-top: var(--space-2);
+  padding-bottom: 0.15em;
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.hero__cta::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.hero__cta:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
 /* -------------------------------------------------------------------- */
 /* Scroll cue — small vertical label + a line with a looping "drip" */
 
@@ -220,5 +249,72 @@
   .hero::before {
     width: 12px;
     height: 12px;
+  }
+}
+
+/* ==========================================================================
+   Home page — About teaser
+   (the "Recent Work" teaser used to live here too, but it's now shared
+   with the About page as well — moved to base.css as `.work-teaser`)
+   ========================================================================== */
+.home-about {
+  padding: var(--space-5) 0 var(--space-6);
+}
+
+.home-about__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--gutter);
+}
+
+.home-about__grid .section-label {
+  grid-column: 1 / span 5;
+}
+
+.home-about__copy {
+  grid-column: 7 / span 6;
+}
+
+.home-about__copy p {
+  font-size: var(--fs-md);
+  line-height: 1.65;
+  opacity: 0.8;
+  max-width: 42ch;
+}
+
+.home-about__link {
+  position: relative;
+  display: inline-block;
+  margin-top: var(--space-3);
+  padding-bottom: 0.15em;
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  text-transform: uppercase;
+}
+
+.home-about__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.home-about__link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+@media (max-width: 720px) {
+  .home-about__grid {
+    display: block;
+  }
+  .home-about__copy {
+    margin-top: var(--space-3);
   }
 }

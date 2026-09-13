@@ -1,5 +1,5 @@
 /* ==========================================================================
-   RUS VISUALS — About section
+   RUSSS VISUALS — About section
    Asymmetric editorial layout: a vertical "running head" label pinned to
    the left edge, a large offset portrait, and a copy column that lands
    lower + to the right rather than sitting in a centered two-up split.
@@ -175,5 +175,102 @@
   .about__lead,
   .about__copy > p:not(.about__lead) {
     max-width: none;
+  }
+}
+
+/* ==========================================================================
+   Why Dealerships Trust Me
+   ========================================================================== */
+.about-trust {
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--line);
+}
+
+.about-trust__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--gutter);
+}
+
+.about-trust__grid .section-label {
+  grid-column: 1 / span 5;
+}
+
+.about-trust__copy {
+  grid-column: 7 / span 6;
+}
+
+.about-trust__copy p {
+  font-size: var(--fs-md);
+  line-height: 1.65;
+  opacity: 0.8;
+}
+
+@media (max-width: 720px) {
+  .about-trust__grid {
+    display: block;
+  }
+  .about-trust__copy {
+    margin-top: var(--space-3);
+  }
+}
+
+/* ==========================================================================
+   Equipment & Process
+   ========================================================================== */
+.about-process {
+  padding: var(--space-5) 0 var(--space-6);
+  border-top: 1px solid var(--line);
+}
+
+.about-process .section-label {
+  margin-bottom: var(--space-4);
+}
+
+.about-process__steps {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+.about-process__steps li {
+  border-top: 1px solid var(--line-strong);
+  padding-top: var(--space-2);
+}
+
+.about-process__num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  opacity: 0.35;
+}
+
+.about-process__steps strong {
+  display: block;
+  margin-top: var(--space-1);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-md);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.about-process__steps p {
+  margin-top: var(--space-1);
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  opacity: 0.7;
+}
+
+@media (max-width: 720px) {
+  .about-process__steps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 420px) {
+  .about-process__steps {
+    grid-template-columns: 1fr;
   }
 }

@@ -3,25 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact — Rus Visuals</title>
-<meta name="description" content="Get in touch with Rus Visuals for automotive photography bookings.">
+<title>Contact — Russs Visuals</title>
+<meta name="description" content="Get in touch with Russs Visuals for automotive photography bookings.">
 
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/contact.css">
 </head>
 <body>
 
-<canvas id="grain"></canvas>
-<div class="cursor-dot" data-cursor-dot></div>
-<div class="cursor-ring" data-cursor-ring></div>
 
 <header class="site-header">
   <a href="index.html" class="logo-mark">
-    <img src="assets/logo/logo.png" alt="RV" onerror="this.style.display='none'">
-    RUS VISUALS
+    <img src="assets/logo/logo.png" alt="Russs Visuals" onerror="this.style.display='none'">
   </a>
   <nav class="nav-links">
     <a class="nav-link" href="work.html">Work</a>
+    <a class="nav-link" href="services.html">Services</a>
     <a class="nav-link" href="about.html">About</a>
     <a class="nav-link" href="contact.html" aria-current="page">Contact</a>
   </nav>
@@ -35,26 +32,70 @@
       Let's make<br>something.
     </h2>
     <div class="contact__actions" data-reveal data-reveal-delay="1">
-      <a class="contact__email" href="mailto:hello@rusvisuals.com" data-magnetic>
-        hello@rusvisuals.com
+      <a class="contact__cta" href="https://instagram.com/russs.visuals" target="_blank" rel="noopener" data-magnetic>
+        DM to book →
+      </a>
+      <!-- TODO: swap in the real WhatsApp number (wa.me/<countrycode><number>, no + or spaces) -->
+      <a class="contact__whatsapp" href="https://wa.me/00000000000" target="_blank" rel="noopener" data-magnetic>
+        WhatsApp
       </a>
       <div class="contact__socials">
-        <a href="#" data-magnetic>Instagram</a>
+        <a href="https://instagram.com/russs.visuals" target="_blank" rel="noopener" data-magnetic>Instagram</a>
         <a href="#" data-magnetic>Behance</a>
         <a href="#" data-magnetic>Twitter&nbsp;/&nbsp;X</a>
       </div>
+      <p class="contact__location">Limassol, Cyprus</p>
     </div>
+  </div>
+
+  <div class="container contact__form-wrap" data-reveal data-reveal-delay="2">
+    <h3 class="contact__form-label">Or send the details</h3>
+    <!--
+      TODO: this form has no backend yet. Quickest fix (~2 min, free):
+      1. Create a form at https://formspree.io (sign up, "New Form")
+      2. Replace YOUR_FORM_ID below with the endpoint it gives you
+      Until then, submitting this form will not go anywhere.
+    -->
+    <form class="contact__form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div class="contact__field">
+        <label for="cf-name">Name</label>
+        <input type="text" id="cf-name" name="name" required>
+      </div>
+      <div class="contact__field">
+        <label for="cf-email">Email</label>
+        <input type="email" id="cf-email" name="email" required>
+      </div>
+      <div class="contact__field">
+        <label for="cf-car">Car(s) &amp; shoot type</label>
+        <input type="text" id="cf-car" name="car" placeholder="e.g. BMW M3, solo shoot">
+      </div>
+      <div class="contact__field">
+        <label for="cf-message">Message</label>
+        <textarea id="cf-message" name="message" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="contact__submit" data-magnetic>Send →</button>
+    </form>
+  </div>
+
+  <div class="container next-steps" data-reveal data-reveal-delay="3">
+    <h3 class="next-steps__label">What happens next</h3>
+    <ol class="next-steps__list">
+      <li><span>01</span>Send your details via DM, WhatsApp, or the form above.</li>
+      <li><span>02</span>Get a reply with availability &amp; a quote — usually within a day.</li>
+      <li><span>03</span>Lock in a date and we shoot.</li>
+    </ol>
   </div>
 </section>
 
 <footer class="site-footer">
   <div class="footer-marquee" aria-hidden="true">
     <div class="footer-marquee__track" data-marquee>
-      <span>Rus Visuals&nbsp;—&nbsp;</span><span>Available for bookings&nbsp;—&nbsp;</span><span>Rus Visuals&nbsp;—&nbsp;</span><span>Available for bookings&nbsp;—&nbsp;</span>
+      <span class="footer-marquee__set"><span>Russs Visuals&nbsp;—&nbsp;</span><span>Available for bookings&nbsp;—&nbsp;</span></span>
     </div>
   </div>
   <div class="container footer-bottom">
-    <span>© <span data-year></span> Rus Visuals</span>
+    <span>© <span data-year></span> Russs Visuals</span>
+    <span>Built by <a href="https://limen-studios.com" target="_blank" rel="noopener">Limen Studios</a></span>
     <span>Back to top ↑</span>
   </div>
 </footer>
@@ -62,6 +103,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="js/main.js"></script>
-<script src="js/contact.js"></script>
 </body>
 </html>

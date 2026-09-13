@@ -1,5 +1,5 @@
 /* ==========================================================================
-   RUS VISUALS — About section
+   RUSSS VISUALS — About section
    One small extra on top of the free [data-reveal] scroll-reveal:
    a subtle scroll-linked parallax on the portrait image. The image is
    sized larger than its frame in about.css (height:130%, top:-15%) so

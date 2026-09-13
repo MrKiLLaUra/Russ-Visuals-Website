@@ -1,5 +1,5 @@
 /* ==========================================================================
-   RUS VISUALS — Contact section + site footer
+   RUSSS VISUALS — Contact section + site footer
    Big asymmetric closing CTA (title left/large, actions offset lower-right),
    plus the footer marquee ticker and bottom bar. Tokens only — no
    hardcoded colors/sizes so this matches the rest of the site.
@@ -7,9 +7,9 @@
 
 .contact {
   display: flex;
-  align-items: center;
-  min-height: 82vh;
-  padding: var(--space-6) 0;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-6) 0 var(--space-5);
 }
 
 .contact__grid {
@@ -45,9 +45,10 @@
 }
 
 /* -------------------------------------------------------------------- */
-/* Interactive link styling shared by the email + socials — an
+/* Interactive link styling shared by the primary CTA + socials — an
    underline that draws in on hover, monochrome only. */
-.contact__email,
+.contact__cta,
+.contact__whatsapp,
 .contact__socials a {
   position: relative;
   display: inline-block;
@@ -55,7 +56,8 @@
   will-change: transform;
 }
 
-.contact__email::after,
+.contact__cta::after,
+.contact__whatsapp::after,
 .contact__socials a::after {
   content: '';
   position: absolute;
@@ -69,16 +71,21 @@
   transition: transform var(--dur-med) var(--ease-out);
 }
 
-.contact__email:hover::after,
+.contact__cta:hover::after,
+.contact__whatsapp:hover::after,
 .contact__socials a:hover::after {
   transform: scaleX(1);
   transform-origin: left;
 }
 
-.contact__email {
+.contact__cta {
   font-family: var(--font-body);
   font-weight: 500;
   font-size: var(--fs-lg);
+}
+
+.contact__whatsapp {
+  font-size: var(--fs-md);
 }
 
 .contact__socials {
@@ -89,6 +96,148 @@
   font-size: var(--fs-sm);
   text-transform: uppercase;
   letter-spacing: 0.08em;
+}
+
+.contact__location {
+  font-size: var(--fs-sm);
+  opacity: 0.6;
+}
+
+/* ==========================================================================
+   Contact form
+   ========================================================================== */
+.contact__form-wrap {
+  border-top: 1px solid var(--line);
+  padding-top: var(--space-5);
+}
+
+.contact__form-label {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+}
+
+.contact__form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4) var(--gutter);
+  max-width: 760px;
+}
+
+.contact__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+
+.contact__field:has(textarea) {
+  grid-column: 1 / -1;
+}
+
+.contact__field label {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+}
+
+.contact__field input,
+.contact__field textarea {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-md);
+  color: var(--ink);
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--line-strong);
+  padding: 0.5em 0;
+  resize: vertical;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.contact__field input:focus,
+.contact__field textarea:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+
+.contact__submit {
+  justify-self: start;
+  grid-column: 1 / -1;
+  margin-top: var(--space-1);
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  padding: 0.85em 1.6em;
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+
+.contact__submit:hover {
+  opacity: 0.85;
+}
+
+@media (max-width: 600px) {
+  .contact__form {
+    grid-template-columns: 1fr;
+  }
+  .contact__field:has(textarea) {
+    grid-column: 1;
+  }
+  .contact__submit {
+    grid-column: 1;
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   What happens next
+   ========================================================================== */
+.next-steps {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+
+.next-steps__label {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.55;
+  margin-bottom: var(--space-3);
+}
+
+.next-steps__list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  max-width: 900px;
+}
+
+.next-steps__list li {
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  opacity: 0.8;
+}
+
+.next-steps__list span {
+  display: block;
+  margin-bottom: 0.4em;
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  opacity: 0.4;
+}
+
+@media (max-width: 600px) {
+  .next-steps__list {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* -------------------------------------------------------------------- */

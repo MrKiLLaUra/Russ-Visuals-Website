@@ -1,6 +1,6 @@
 /* ==========================================================================
-   RUS VISUALS — Hero section
-   Splits the "Rus" / "Visuals" wordmark into a masked, staggered
+   RUSSS VISUALS — Hero section
+   Splits the "Russs" / "Visuals" wordmark into a masked, staggered
    entrance instead of a plain fade, then layers two small always-on
    details on top: a slow mousemove drift on the headline, and a gentle
    idle wobble on "Visuals" (its hand-tagged flourish). Falls back to a

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   RUS VISUALS — Selected Work (gallery section)
+   RUSSS VISUALS — Selected Work (gallery section)
    Owns: #work section chrome (.work, .work__head, .work__intro) since it's
    the only stylesheet loaded for this section, the asymmetric masonry grid
    (.gallery + item modifiers), and the lightbox overlay (.lightbox).
@@ -47,6 +47,60 @@
     max-width: none;
     text-align: left;
   }
+}
+
+/* ---------- Photo / Video filter tabs ---------- */
+.work__tabs {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.work__tab {
+  position: relative;
+  padding-bottom: 0.3em;
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  background: none;
+  border: none;
+  color: var(--ink);
+  opacity: 0.4;
+  cursor: pointer;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.work__tab::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.work__tab:hover {
+  opacity: 0.7;
+}
+
+.work__tab.is-active {
+  opacity: 1;
+}
+
+.work__tab.is-active::after {
+  transform: scaleX(1);
+}
+
+.work__empty {
+  padding: var(--space-6) 0;
+  text-align: center;
+  font-size: var(--fs-lg);
+  opacity: 0.5;
 }
 
 /* ---------- asymmetric masonry grid ----------
@@ -282,5 +336,45 @@
   .lightbox,
   .lightbox__img {
     transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   Brands I've Shot
+   ========================================================================== */
+.brands {
+  padding: var(--space-6) 0 var(--space-5);
+  border-top: 1px solid var(--line);
+}
+
+.brands .section-label {
+  margin-bottom: var(--space-4);
+}
+
+.brands__list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+}
+
+.brands__list li {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  text-transform: uppercase;
+  opacity: 0.85;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.brands__list li:hover {
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .brands__list {
+    gap: var(--space-2) var(--space-3);
+  }
+  .brands__list li {
+    font-size: var(--fs-md);
   }
 }
